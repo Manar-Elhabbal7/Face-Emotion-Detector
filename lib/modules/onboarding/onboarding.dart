@@ -44,12 +44,15 @@ class OnboardingScreen extends StatelessWidget {
                 ),
               ),
 
-              // Pages
+              
               Expanded(
-                child: pages[controller.currentPage.value],
+              child: PageView(
+                controller: controller.pageController,
+                onPageChanged: controller.onPageChanged,
+                children: pages,
               ),
+            ),
 
-              // Indicator
               Padding(
                 padding: const EdgeInsets.only(bottom: 24.0),
                 child: Row(
@@ -71,7 +74,6 @@ class OnboardingScreen extends StatelessWidget {
                 ),
               ),
 
-              // Navigation Buttons
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
                 child: Row(
@@ -100,7 +102,6 @@ class OnboardingScreen extends StatelessWidget {
                     if (controller.currentPage.value > 0)
                       const SizedBox(width: 12),
 
-                    // Next/Start Button
                     Expanded(
                       child: CustomButton(
                         label: controller.currentPage.value == pages.length - 1

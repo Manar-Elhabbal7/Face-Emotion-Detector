@@ -4,42 +4,69 @@ import 'package:get/get.dart';
 import '../../app/themes.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  HomePage({super.key});
+
+  final HomeController controller = Get.put(HomeController());
+
+  List<BottomNavigationBarItem> get items => const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.camera_front),
+          label: 'Selfie',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.camera_rear),
+          label: 'Back Camera',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.upload_file),
+          label: 'Upload',
+        ),
+      ];
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(HomeController());
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Face Analyzer'),
+        backgroundColor: AppThemes.appBarColor,
         elevation: 0,
       ),
-      body: const Padding(
-        padding: EdgeInsets.all(24.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.face, size: 100, color: AppThemes.primary),
-            SizedBox(height: 32),
 
-           Text(
-              'Ready to Analyze?',
-              style: AppThemes.heading2,
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 16),
+      body: PageView(
+        controller: controller.pageController,
+        onPageChanged: controller.onPageChanged,
+        children: [
+          buildScreen(Icons.camera_front, "Selfie Screen"),
+          buildScreen(Icons.camera_rear, "Back Camera Screen"),
+          buildScreen(Icons.upload_file, "Upload Screen"),
+        ],
+      ),
 
-           Text(
-              'Choose how you want to capture your face',
-              style: AppThemes.body2,
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 48),
+      bottomNavigationBar: _buildBottomNavigationBar(),
+    );
+  }
 
-           
-          ],
-        ),
+  Widget buildScreen(IconData icon, String text) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, size: 100, color: AppThemes.primary),
+          const SizedBox(height: 32),
+          Text(text, style: AppThemes.heading2),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBottomNavigationBar() {
+    return Obx(
+      () => BottomNavigationBar(
+        items: items,
+        currentIndex: controller.currentIndex.value,
+        selectedItemColor: AppThemes.primary,
+        unselectedItemColor: Colors.grey,
+        onTap: controller.changeIndex,
       ),
     );
   }

@@ -1,18 +1,27 @@
 import 'package:get/get.dart';
-import '../../app/routes.dart';
+import 'package:flutter/material.dart';
 
 class HomeController extends GetxController {
-  void openSelfieCamera() {
-    // TODO: Open front camera
-    Get.toNamed(AppRoutes.camera, arguments: {'isSelfie': true});
+  // Current bottom nav index
+  var currentIndex = 0.obs;
+
+  // PageController for swiping between screens
+  final PageController pageController = PageController();
+
+  // Called when bottom nav item is tapped
+  void changeIndex(int index) {
+    currentIndex.value = index;
+    pageController.jumpToPage(index); // jump to the tapped page
   }
 
-  void openBackCamera() {
-    // TODO: Open back camera
-    Get.toNamed(AppRoutes.camera, arguments: {'isSelfie': false});
+  // Called when page is swiped
+  void onPageChanged(int index) {
+    currentIndex.value = index; // update bottom nav
   }
 
-  void uploadPhoto() {
-    // TODO: Open gallery
+  @override
+  void onClose() {
+    pageController.dispose(); // clean up when controller is destroyed
+    super.onClose();
   }
 }
