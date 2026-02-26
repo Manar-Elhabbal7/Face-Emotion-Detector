@@ -1,4 +1,4 @@
-import 'package:face_condition_app/modules/onboarding/onboarding_controllor.dart';
+import 'package:face_condition_detector/modules/onboarding/onboarding_controllor.dart';
 import 'package:flutter/material.dart';
 import '../../app/themes.dart';
 

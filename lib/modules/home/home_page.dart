@@ -1,4 +1,4 @@
-import 'package:face_condition_app/modules/home/home_controllor.dart';
+import 'package:face_condition_detector/modules/home/home_controllor.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../app/themes.dart';
@@ -35,9 +35,9 @@ class HomePage extends StatelessWidget {
         controller: controller.pageController,
         onPageChanged: controller.onPageChanged,
         children: [
-          buildScreen(Icons.camera_front, "Selfie Screen"),
-          buildScreen(Icons.camera_rear, "Back Camera Screen"),
-          buildScreen(Icons.upload_file, "Upload Screen"),
+          buildScreen(Icons.portrait, "Selfie Screen"),
+          buildScreen(Icons.camera_alt, "Back Camera Screen"),
+          buildScreen(Icons.image, "Upload Screen"),
         ],
       ),
       bottomNavigationBar: _buildBottomNavigationBar(),

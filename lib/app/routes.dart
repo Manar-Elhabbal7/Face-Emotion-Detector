@@ -1,5 +1,5 @@
-import 'package:face_condition_app/modules/home/home_page.dart';
-import 'package:face_condition_app/modules/onboarding/onboarding.dart';
+import 'package:face_condition_detector/modules/onboarding/onboarding.dart';
+import 'package:face_condition_detector/modules/home/home_page.dart';
 import 'package:get/get.dart';
 
 class AppRoutes {

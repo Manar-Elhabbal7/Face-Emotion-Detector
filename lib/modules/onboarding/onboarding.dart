@@ -1,8 +1,8 @@
-import 'package:face_condition_app/modules/onboarding/features.dart';
-import 'package:face_condition_app/modules/onboarding/onboarding_controllor.dart';
-import 'package:face_condition_app/modules/onboarding/permissions.dart';
-import 'package:face_condition_app/modules/onboarding/welcome_page.dart';
-import 'package:face_condition_app/widgets/custom_buttom.dart';
+import 'package:face_condition_detector/modules/onboarding/features.dart';
+import 'package:face_condition_detector/modules/onboarding/onboarding_controllor.dart';
+import 'package:face_condition_detector/modules/onboarding/permissions.dart';
+import 'package:face_condition_detector/modules/onboarding/welcome_page.dart';
+import 'package:face_condition_detector/widgets/custom_buttom.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../app/routes.dart';
@@ -111,6 +111,8 @@ class OnboardingScreen extends StatelessWidget {
                           if (controller.currPage.value == pages.length - 1) {
                             // Request permissions on last page
                             await controller.requestPermissions();
+                            await controller.completeOnboarding();
+
                             Get.offNamed(AppRoutes.home);
                           } else {
                             controller.nextPage();
