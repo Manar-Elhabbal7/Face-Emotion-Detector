@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class OnboardingController extends GetxController {
-  var currentPage = 0.obs;
+  var currPage = 0.obs;
   var permissionsGranted = false.obs;
 
   final PageController pageController = PageController();
 
   void onPageChanged(int index) {
-    currentPage.value = index;
+    currPage.value = index;
   }
 
   void nextPage() {
-    if (currentPage.value < 2) {
+    if (currPage.value < 2) {
       pageController.nextPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
@@ -22,7 +22,7 @@ class OnboardingController extends GetxController {
   }
 
   void previousPage() {
-    if (currentPage.value > 0) {
+    if (currPage.value > 0) {
       pageController.previousPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
@@ -38,8 +38,7 @@ class OnboardingController extends GetxController {
     final cameraStatus = await Permission.camera.request();
     final photoStatus = await Permission.photos.request();
 
-    permissionsGranted.value =
-        cameraStatus.isGranted && photoStatus.isGranted;
+    permissionsGranted.value = cameraStatus.isGranted && photoStatus.isGranted;
   }
 
   @override

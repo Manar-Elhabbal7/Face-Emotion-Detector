@@ -11,7 +11,7 @@ class AppThemes {
   static const Color black = Color(0xFF000000);
   static const Color grey = Color(0xFF757575);
   static const Color lightGrey = Color(0xFFF5F5F5);
-  
+
   // Emotions
   static const Color happy = Color(0xFFFFD93D);
   static const Color sad = Color(0xFF6C63FF);
@@ -31,6 +31,12 @@ class AppThemes {
     color: black,
   );
 
+  static const TextStyle heading3 = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w500,
+    color: black,
+  );
+  
   static const TextStyle body1 = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.normal,
@@ -41,5 +47,11 @@ class AppThemes {
     fontSize: 14,
     fontWeight: FontWeight.normal,
     color: grey,
+  );
+
+  static const TextStyle button = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+    color: white,
   );
 }

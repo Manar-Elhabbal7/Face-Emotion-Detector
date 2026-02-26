@@ -9,7 +9,7 @@ import '../../app/routes.dart';
 import '../../app/themes.dart';
 
 class OnboardingScreen extends StatelessWidget {
-  const OnboardingScreen({Key? key}) : super(key: key);
+  const OnboardingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -44,14 +44,13 @@ class OnboardingScreen extends StatelessWidget {
                 ),
               ),
 
-              
               Expanded(
-              child: PageView(
-                controller: controller.pageController,
-                onPageChanged: controller.onPageChanged,
-                children: pages,
+                child: PageView(
+                  controller: controller.pageController,
+                  onPageChanged: controller.onPageChanged,
+                  children: pages,
+                ),
               ),
-            ),
 
               Padding(
                 padding: const EdgeInsets.only(bottom: 24.0),
@@ -64,7 +63,7 @@ class OnboardingScreen extends StatelessWidget {
                       height: 10,
                       margin: const EdgeInsets.symmetric(horizontal: 6),
                       decoration: BoxDecoration(
-                        color: controller.currentPage.value == index
+                        color: controller.currPage.value == index
                             ? AppThemes.primary
                             : AppThemes.primary.withOpacity(0.3),
                         shape: BoxShape.circle,
@@ -75,11 +74,12 @@ class OnboardingScreen extends StatelessWidget {
               ),
 
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 24.0, vertical: 16.0),
                 child: Row(
                   children: [
                     // Back Button
-                    if (controller.currentPage.value > 0)
+                    if (controller.currPage.value > 0)
                       Expanded(
                         child: OutlinedButton(
                           onPressed: controller.previousPage,
@@ -99,16 +99,16 @@ class OnboardingScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                    if (controller.currentPage.value > 0)
+                    if (controller.currPage.value > 0)
                       const SizedBox(width: 12),
 
                     Expanded(
                       child: CustomButton(
-                        label: controller.currentPage.value == pages.length - 1
+                        label: controller.currPage.value == pages.length - 1
                             ? 'start'
                             : 'Next',
                         onPressed: () async {
-                          if (controller.currentPage.value == pages.length - 1) {
+                          if (controller.currPage.value == pages.length - 1) {
                             // Request permissions on last page
                             await controller.requestPermissions();
                             Get.offNamed(AppRoutes.home);

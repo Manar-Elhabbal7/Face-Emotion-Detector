@@ -7,11 +7,11 @@ class CustomButton extends StatelessWidget {
   final Color color;
 
   const CustomButton({
-    Key? key,
+    super.key,
     required this.label,
     required this.onPressed,
     this.color = AppThemes.primary,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +28,7 @@ class CustomButton extends StatelessWidget {
         ),
         child: Text(
           label,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
-          ),
+          style: AppThemes.button,
         ),
       ),
     );

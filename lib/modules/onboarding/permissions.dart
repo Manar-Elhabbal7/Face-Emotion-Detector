@@ -2,12 +2,10 @@ import 'package:face_condition_app/modules/onboarding/onboarding_controllor.dart
 import 'package:flutter/material.dart';
 import '../../app/themes.dart';
 
-
 class permissionPage extends StatelessWidget {
   final OnboardingController controller;
 
-  const permissionPage({Key? key, required this.controller})
-      : super(key: key);
+  const permissionPage({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +16,8 @@ class permissionPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(height: 40),
-            
-            // Icon
+
+            // Permission Icon
             Container(
               width: 120,
               height: 120,
@@ -50,7 +48,7 @@ class permissionPage extends StatelessWidget {
             const SizedBox(height: 48),
 
             _buildPermissionItem(
-              Icons.videocam,
+              Icons.camera_alt,
               'Camera',
               'To capture photos',
             ),
@@ -95,8 +93,7 @@ class permissionPage extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style:
-                      AppThemes.body1.copyWith(fontWeight: FontWeight.w600),
+                  style: AppThemes.body1.copyWith(fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 4),
                 Text(description, style: AppThemes.body2),
@@ -105,7 +102,7 @@ class permissionPage extends StatelessWidget {
           ),
           const Icon(
             Icons.check_circle,
-            color: Color.fromARGB(255, 59, 118, 60),
+            color: Color.fromARGB(255, 115, 192, 116),
             size: 28,
           ),
         ],

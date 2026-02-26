@@ -2,11 +2,10 @@ import 'package:face_condition_app/modules/onboarding/onboarding_controllor.dart
 import 'package:flutter/material.dart';
 import '../../app/themes.dart';
 
-
 class welcomePage extends StatelessWidget {
   final OnboardingController controller;
 
-  const welcomePage({Key? key, required this.controller}) : super(key: key);
+  const welcomePage({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +16,8 @@ class welcomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(height: 40),
-            
-            // Icon
+
+            // Face Icon
             Container(
               width: 120,
               height: 120,
@@ -36,7 +35,7 @@ class welcomePage extends StatelessWidget {
 
             // Title
             const Text(
-              'Face Analyzer',
+              'Mood Detector',
               style: AppThemes.heading1,
               textAlign: TextAlign.center,
             ),
@@ -44,7 +43,7 @@ class welcomePage extends StatelessWidget {
 
             // Subtitle
             const Text(
-              'Detect Your Mood & Analyze Lighting in Real-Time',
+              'Detect Your Face Mood & Analyze Lighting in Real-Time',
               style: AppThemes.body2,
               textAlign: TextAlign.center,
             ),

@@ -10,15 +10,15 @@ class HomePage extends StatelessWidget {
 
   List<BottomNavigationBarItem> get items => const [
         BottomNavigationBarItem(
-          icon: Icon(Icons.camera_front),
+          icon: Icon(Icons.portrait),
           label: 'Selfie',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.camera_rear),
+          icon: Icon(Icons.camera_alt),
           label: 'Back Camera',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.upload_file),
+          icon: Icon(Icons.image),
           label: 'Upload',
         ),
       ];
@@ -27,11 +27,10 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Face Analyzer'),
+        title: const Text('Face Emotion Detection'),
         backgroundColor: AppThemes.appBarColor,
         elevation: 0,
       ),
-
       body: PageView(
         controller: controller.pageController,
         onPageChanged: controller.onPageChanged,
@@ -41,7 +40,6 @@ class HomePage extends StatelessWidget {
           buildScreen(Icons.upload_file, "Upload Screen"),
         ],
       ),
-
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
   }
@@ -63,7 +61,7 @@ class HomePage extends StatelessWidget {
     return Obx(
       () => BottomNavigationBar(
         items: items,
-        currentIndex: controller.currentIndex.value,
+        currentIndex: controller.currIdx.value,
         selectedItemColor: AppThemes.primary,
         unselectedItemColor: Colors.grey,
         onTap: controller.changeIndex,

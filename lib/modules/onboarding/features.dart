@@ -5,7 +5,7 @@ import '../../app/themes.dart';
 class FeaturesPage extends StatelessWidget {
   final OnboardingController controller;
 
-  const FeaturesPage({Key? key, required this.controller}) : super(key: key);
+  const FeaturesPage({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -15,19 +15,16 @@ class FeaturesPage extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: 40),
-            
             const Text(
               'How to use it?',
               style: AppThemes.heading1,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 48),
-
             _buildStep(
               number: '1',
               title: 'Choose Source',
-              description:
-                  'Take a photo (selfie/back) or upload from gallery',
+              description: 'Take a photo (selfie/back) or upload from gallery',
               icon: Icons.photo_camera,
             ),
             const SizedBox(height: 24),
@@ -42,8 +39,7 @@ class FeaturesPage extends StatelessWidget {
             _buildStep(
               number: '3',
               title: 'Get Results',
-              description:
-                  'View detailed insights about your mood & condition',
+              description: 'View detailed insights about your mood & condition',
               icon: Icons.analytics,
             ),
             const SizedBox(height: 60),
@@ -92,8 +88,7 @@ class FeaturesPage extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style:
-                      AppThemes.body1.copyWith(fontWeight: FontWeight.w600),
+                  style: AppThemes.body1.copyWith(fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 6),
                 Text(description, style: AppThemes.body2),

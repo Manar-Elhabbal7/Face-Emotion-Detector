@@ -2,26 +2,21 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 class HomeController extends GetxController {
-  // Current bottom nav index
-  var currentIndex = 0.obs;
-
-  // PageController for swiping between screens
+  var currIdx = 0.obs;
   final PageController pageController = PageController();
 
-  // Called when bottom nav item is tapped
   void changeIndex(int index) {
-    currentIndex.value = index;
-    pageController.jumpToPage(index); // jump to the tapped page
+    currIdx.value = index;
+    pageController.jumpToPage(index);
   }
 
-  // Called when page is swiped
   void onPageChanged(int index) {
-    currentIndex.value = index; // update bottom nav
+    currIdx.value = index;
   }
 
   @override
   void onClose() {
-    pageController.dispose(); // clean up when controller is destroyed
+    pageController.dispose();
     super.onClose();
   }
 }
