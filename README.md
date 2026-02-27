@@ -15,3 +15,40 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+```
+
+├─ lib
+│  ├─ app
+│  │  ├─ routes.dart
+│  │  └─ themes.dart
+│  ├─ main.dart
+│  ├─ modules
+│  │  ├─ camera
+│  │  │  ├─ camera_controllor.dart
+│  │  │  └─ camera_page.dart
+│  │  ├─ home
+│  │  │  ├─ home_controllor.dart
+│  │  │  └─ home_page.dart
+│  │  ├─ onboarding
+│  │  │  ├─ features.dart
+│  │  │  ├─ onboarding.dart
+│  │  │  ├─ onboarding_controllor.dart
+│  │  │  ├─ permissions.dart
+│  │  │  └─ welcome_page.dart
+│  │  └─ results
+│  │     ├─ mood_result.dart
+│  │     └─ result_controllor.dart
+│  ├─ services
+│  │  ├─ camera_service.dart
+│  │  └─ face_analyzer.dart
+│  └─ widgets
+│     └─ custom_buttom.dart
+
+
+
+
+
+
+
+```

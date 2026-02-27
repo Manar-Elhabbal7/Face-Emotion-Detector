@@ -35,7 +35,7 @@ class faceMood extends StatelessWidget {
   }
 }
 /*
-TODO: add shared preferences 
+//TODO: add shared preferences (done)
 TODO: add guidence on using tabs (optional)
 TODO: add ML support 
 TODO : give results of mood and light 

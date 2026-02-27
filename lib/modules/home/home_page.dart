@@ -1,3 +1,5 @@
+import 'package:face_condition_detector/modules/camera/gallery_upload_screen.dart';
+import 'package:face_condition_detector/modules/camera/take_photo.dart';
 import 'package:face_condition_detector/modules/home/home_controllor.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,13 +12,10 @@ class HomePage extends StatelessWidget {
 
   List<BottomNavigationBarItem> get items => const [
         BottomNavigationBarItem(
-          icon: Icon(Icons.portrait),
-          label: 'Selfie',
-        ),
-        BottomNavigationBarItem(
           icon: Icon(Icons.camera_alt),
-          label: 'Back Camera',
+          label: 'Take Photo',
         ),
+
         BottomNavigationBarItem(
           icon: Icon(Icons.image),
           label: 'Upload',
@@ -34,28 +33,15 @@ class HomePage extends StatelessWidget {
       body: PageView(
         controller: controller.pageController,
         onPageChanged: controller.onPageChanged,
-        children: [
-          buildScreen(Icons.portrait, "Selfie Screen"),
-          buildScreen(Icons.camera_alt, "Back Camera Screen"),
-          buildScreen(Icons.image, "Upload Screen"),
+        children: const [
+             SelfieScreen(),
+             GalleryScreen(),
         ],
       ),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
   }
 
-  Widget buildScreen(IconData icon, String text) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 100, color: AppThemes.primary),
-          const SizedBox(height: 32),
-          Text(text, style: AppThemes.heading2),
-        ],
-      ),
-    );
-  }
 
   Widget _buildBottomNavigationBar() {
     return Obx(
