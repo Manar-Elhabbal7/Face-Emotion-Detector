@@ -27,9 +27,7 @@ dependencies:
 
   # 5. Storage
   shared_preferences: ^2.2.0
-  tflite_flutter: ^0.12.1
   flutter_image_compress: ^2.4.0
-  flutter_exif_rotation: ^0.5.2
 
 dev_dependencies:
   flutter_test:
