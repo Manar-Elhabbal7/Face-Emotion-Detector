@@ -137,19 +137,12 @@ class _GalleryScreenState extends State<GalleryScreen>
                             ),
                           ),
                         )
-                      : Column(
+                      :  Column(
                           children: [
-                            Container(
-                              padding: const EdgeInsets.all(30),
-                              decoration: const BoxDecoration(
-                                color: AppThemes.lightGrey,
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Icon(
-                                Icons.image,
-                                size: 80,
-                                color: Color.fromARGB(255, 135, 167, 216),
-                              ),
+                           const Icon(
+                              Icons.image,
+                              size: 80,
+                              color: Color.fromARGB(255, 135, 167, 216),
                             ),
                             const SizedBox(height: 20),
                             Text(

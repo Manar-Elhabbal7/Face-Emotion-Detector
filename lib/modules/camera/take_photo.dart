@@ -59,7 +59,7 @@ class _takePhotoState extends State<takePhoto>
     } catch (e) {
       SharedImageAnalyzer.showErrorDialog(
         context: context,
-        message: 'Failed to take selfie: $e',
+        message: 'Failed to take photo: $e',
       );
     }
   }
@@ -148,21 +148,14 @@ class _takePhotoState extends State<takePhoto>
                         )
                       : Column(
                           children: [
-                            Container(
-                              padding: const EdgeInsets.all(30),
-                              decoration: const BoxDecoration(
-                                color: AppThemes.lightGrey,
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Icon(
-                                Icons.portrait,
-                                size: 80,
-                                color: Color.fromARGB(255, 136, 164, 208),
-                              ),
+                            const Icon(
+                              Icons.portrait,
+                              size: 80,
+                              color: Color.fromARGB(255, 136, 164, 208),
                             ),
                             const SizedBox(height: 20),
                             Text(
-                              'Ready to capture your selfie?',
+                              'Ready to capture your photo?',
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.grey.shade600,
@@ -173,7 +166,6 @@ class _takePhotoState extends State<takePhoto>
                         ),
                 ),
                 const SizedBox(height: 40),
-
                 if (_isAnalyzing)
                   Column(
                     children: [
@@ -195,7 +187,7 @@ class _takePhotoState extends State<takePhoto>
                   ElevatedButton.icon(
                     onPressed: _takeSelfie,
                     icon: const Icon(Icons.camera_alt),
-                    label: const Text('Take Selfie'),
+                    label: const Text('Take Photo'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppThemes.primary,
                       foregroundColor: Colors.white,
