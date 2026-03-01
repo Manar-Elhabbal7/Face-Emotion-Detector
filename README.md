@@ -25,8 +25,8 @@ samples, guidance on mobile development, and a full API reference.
 │  ├─ main.dart
 │  ├─ modules
 │  │  ├─ camera
-│  │  │  ├─ camera_controllor.dart
-│  │  │  └─ camera_page.dart
+│  │  │  ├─ gallery_upload_screen.dart
+│  │  │  └─ take_photo.dart
 │  │  ├─ home
 │  │  │  ├─ home_controllor.dart
 │  │  │  └─ home_page.dart
@@ -40,7 +40,6 @@ samples, guidance on mobile development, and a full API reference.
 │  │     ├─ mood_result.dart
 │  │     └─ result_controllor.dart
 │  ├─ services
-│  │  ├─ camera_service.dart
 │  │  └─ face_analyzer.dart
 │  └─ widgets
 │     └─ custom_buttom.dart
