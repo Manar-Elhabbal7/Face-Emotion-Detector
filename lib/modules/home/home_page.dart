@@ -34,7 +34,7 @@ class HomePage extends StatelessWidget {
         controller: controller.pageController,
         onPageChanged: controller.onPageChanged,
         children: const [
-             SelfieScreen(),
+             takePhoto(),
              GalleryScreen(),
         ],
       ),
@@ -47,6 +47,7 @@ class HomePage extends StatelessWidget {
     return Obx(
       () => BottomNavigationBar(
         items: items,
+        backgroundColor: const Color.fromARGB(205, 251, 250, 255),
         currentIndex: controller.currIdx.value,
         selectedItemColor: AppThemes.primary,
         unselectedItemColor: Colors.grey,

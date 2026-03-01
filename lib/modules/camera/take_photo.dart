@@ -1,20 +1,20 @@
 import 'dart:io';
 import 'package:face_condition_detector/app/themes.dart';
+import 'package:face_condition_detector/modules/camera/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:face_condition_detector/modules/results/result_controllor.dart';
 import 'package:face_condition_detector/services/face_analyzer.dart';
 
-class SelfieScreen extends StatefulWidget {
-  const SelfieScreen({super.key});
+class takePhoto extends StatefulWidget {
+  const takePhoto({super.key});
 
   @override
-  State<SelfieScreen> createState() => _SelfieScreenState();
+  State<takePhoto> createState() => _takePhotoState();
 }
 
-class _SelfieScreenState extends State<SelfieScreen>
+class _takePhotoState extends State<takePhoto>
     with SingleTickerProviderStateMixin {
   final ImagePicker _imagePicker = ImagePicker();
   final ResultController _resultController = Get.put(ResultController());
@@ -36,7 +36,10 @@ class _SelfieScreenState extends State<SelfieScreen>
 
   Future<void> _takeSelfie() async {
     if (!_faceDetectionService.isInitialized) {
-      _showErrorDialog('Face Detection Service is not ready yet. Please wait.');
+      SharedImageAnalyzer.showErrorDialog(
+        context: context,
+        message: 'Face Detection Service is not ready yet. Please wait.',
+      );
       return;
     }
 
@@ -48,34 +51,16 @@ class _SelfieScreenState extends State<SelfieScreen>
       );
 
       if (image != null) {
-        final fixedFile = await _fixImage(image.path);
-        setState(() {
-          _capturedImage = XFile(fixedFile.path);
-        });
+        final fixedFile = await SharedImageAnalyzer.fixImage(image.path);
+        setState(() => _capturedImage = XFile(fixedFile.path));
         _animationController.forward();
         await _analyzeFace(fixedFile.path);
       }
     } catch (e) {
-      _showErrorDialog('Failed to take selfie: $e');
-    }
-  }
-
-  Future<File> _fixImage(String path) async {
-    try {
-      final compressedBytes = await FlutterImageCompress.compressWithFile(
-        path,
-        format: CompressFormat.jpeg,
-        quality: 100,
-        rotate: 0,
+      SharedImageAnalyzer.showErrorDialog(
+        context: context,
+        message: 'Failed to take selfie: $e',
       );
-
-      if (compressedBytes == null) return File(path);
-
-      final tempFile = await File('${path}_fixed.jpg').writeAsBytes(compressedBytes);
-      return tempFile;
-    } catch (e) {
-      print('Image fix failed: $e');
-      return File(path);
     }
   }
 
@@ -83,217 +68,36 @@ class _SelfieScreenState extends State<SelfieScreen>
     setState(() => _isAnalyzing = true);
 
     try {
-      final result = await _faceDetectionService.analyzeFaceFromImage(imagePath);
+      final result = await SharedImageAnalyzer.analyzeFace(
+        imagePath,
+        _faceDetectionService,
+      );
       _resultController.setResult(result);
 
       if (result.success) {
-        _showResultDialog(result);
+        SharedImageAnalyzer.showResultDialog(
+          context: context,
+          result: result,
+          onRetakeOrChooseAnother: () {
+            _capturedImage = null;
+            _animationController.reset();
+            setState(() {});
+          },
+        );
       } else {
-        _showErrorDialog(result.message);
+        SharedImageAnalyzer.showErrorDialog(
+          context: context,
+          message: result.message,
+        );
       }
     } catch (e) {
-      _showErrorDialog('Error analyzing face: $e');
+      SharedImageAnalyzer.showErrorDialog(
+        context: context,
+        message: 'Error analyzing face: $e',
+      );
     } finally {
       setState(() => _isAnalyzing = false);
     }
-  }
-
-  void _showResultDialog(Result result) {
-    showDialog(
-      context: context,
-      builder: (context) => Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        backgroundColor: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // 🎯 Success Icon
-              Container(
-                padding: const EdgeInsets.all(15),
-                decoration: const BoxDecoration(
-                  color: AppThemes.lightGrey,
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.check_circle,
-                  color: AppThemes.primary,
-                  size: 40,
-                ),
-              ),
-              const SizedBox(height: 15),
-              const Text(
-                'Analysis Complete',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 20),
-              // 📊 Results
-              Container(
-                padding: const EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Column(
-                  children: [
-                    _buildResultRowDialog('😊 Mood', result.emotionalState,
-                        Colors.blue),
-                    const Divider(height: 15),
-                    _buildResultRowDialog('💡 Lighting', result.lightingStatus,
-                        Colors.orange),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
-              // 🔘 Buttons
-              Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        _capturedImage = null;
-                        _animationController.reset();
-                        setState(() {});
-                      },
-                      style: OutlinedButton.styleFrom(
-                        side: const BorderSide(color: AppThemes.primary),
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      child: const Text(
-                        'Retake',
-                        style: TextStyle(
-                          color: AppThemes.primary,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () => Navigator.pop(context),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppThemes.primary,
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      child: const Text(
-                        'Done',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _showErrorDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (context) => Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  color: Colors.red.shade100,
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  Icons.error_outline,
-                  color: Colors.red.shade700,
-                  size: 40,
-                ),
-              ),
-              const SizedBox(height: 15),
-              const Text(
-                'Oops!',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                message,
-                textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.grey),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () => Navigator.pop(context),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 40,
-                    vertical: 12,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                child: const Text(
-                  'Try Again',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildResultRowDialog(String label, String value, Color color) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-          decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Text(
-            value,
-            style: TextStyle(
-              fontSize: 14,
-              color: color,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ],
-    );
   }
 
   @override
@@ -306,7 +110,6 @@ class _SelfieScreenState extends State<SelfieScreen>
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // 📸 Image Container or Icon
                 AnimatedSwitcher(
                   duration: const Duration(milliseconds: 500),
                   child: _capturedImage != null
@@ -370,12 +173,13 @@ class _SelfieScreenState extends State<SelfieScreen>
                         ),
                 ),
                 const SizedBox(height: 40),
-                // 🔘 Action Button or Loading
+
                 if (_isAnalyzing)
                   Column(
                     children: [
                       const CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(AppThemes.primary),
+                        valueColor:
+                            AlwaysStoppedAnimation<Color>(AppThemes.primary),
                       ),
                       const SizedBox(height: 15),
                       Text(
